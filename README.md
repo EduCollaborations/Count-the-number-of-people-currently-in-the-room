@@ -3,7 +3,7 @@
    git clone https://github.com/EduCollaborations/Count-the-number-of-people-currently-in-the-room.git
    ```
 2. once this done redirect the directory into the project
-3. ``bash
+3. ```bash
    cd Count-the-number-of-people-currently-in-the-room
    ```
    create a folder on your name and USN

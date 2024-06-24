@@ -4,12 +4,12 @@
    ```
 2. once this done redirect the directory into the project
 3. ``bash
-   cd Counting-of-Objects-in-an-image
+   cd Count-the-number-of-people-currently-in-the-room
    ```
    create a folder on your name and USN
 4. enter into your folder
    ```bash
-   cd Classification-of-electronic-components
+   cd name-usn
    ```
 
 # Note

@@ -1,16 +1,3 @@
-# Cloning your repo
-1. ```bash
-   git clone https://github.com/EduCollaborations/Count-the-number-of-people-currently-in-the-room.git
-   ```
-2. once this done redirect the directory into the project
-  ```bash
-   cd Count-the-number-of-people-currently-in-the-room
-   ```
-3. create a folder on your name and USN
-   enter into your folder
-   ```bash
-   cd name-usn
-   ```
 
 # Note
 ## The given projet is just a example you need to collect dataset related to people in the room and start annotation with the same procedure
@@ -173,49 +160,6 @@ print(f'Number of boxes detected: {num_boxes}')
 
 ## Output Explanation
 After running the inference code, the output will be an image with detected boxes highlighted by green rectangles. The number of detected boxes will be displayed both on the image and printed in the console. The contours detected by the algorithm are filtered based on their area, aspect ratio, and hierarchy to ensure only valid boxes are counted.
-
-# Commit to Github
-
-1. **Add all untracked files to the staging area:**
-    The command you attempted, `git add.`, is incorrect because there is no space between `add` and `.`. Use the correct command:
-    ```sh
-    git add .
-    ```
-
-2. **Commit the staged files:**
-    After adding the files, commit them with a message:
-    ```sh
-    git commit -m "Initial commit"
-    ```
-
-3. **Rename the branch to `main`:**
-    Since you have already attempted to rename the branch, it should already be named `main`. You can check the current branch name using:
-    ```sh
-    git branch
-    ```
-
-4. **Push the code to the remote repository:**
-    Ensure the remote repository is correctly set up and push your code:
-    ```sh
-    git push -u origin main
-    ```
-
-Here is the entire sequence of commands together:
-```sh
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git push -u origin main
-```
-
-If you encounter any issues with existing remote configuration, you can remove and re-add the remote origin:
-```sh
-git remote remove origin
-git remote add origin https://github.com/Ashok0104/Spotify.git
-git push -u origin main
-```
-
-This should resolve the problems and successfully push your initial commit to t
 
 ## Applications
 The techniques and processes described in this project have several practical applications, including:

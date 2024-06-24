@@ -13,7 +13,7 @@
    ```
 
 # Note
-## The given projet is just a example you need to collect dataset related to the choosen people in the room and start annotation with the same procedure
+## The given projet is just a example you need to collect dataset related to people in the room and start annotation with the same procedure
 
 
 # Box Detection and Counting using OpenCV

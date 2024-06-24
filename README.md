@@ -57,7 +57,7 @@ This project involves annotating a dataset containing images with boxes, trainin
 - **LabelImg:** LabelImg is an open-source graphical image annotation tool used for labeling objects in images.
 
 ## Dataset Preparation
-
+[Labeling image](https://drive.google.com/drive/folders/1WHpExY04EewfeeqJdMxsMg6maO7FCz8_?usp=drive_link)
 1. **Annotate Images**: Use `labelimg` to annotate the dataset containing images with boxes. Save the annotations in the appropriate format.
 
 

@@ -1,6 +1,6 @@
 # Cloning your repo
 1. ```bash
-   git clone https://github.com/EduCollaborations/Classification-of-electronic-components.git
+   git clone https://github.com/EduCollaborations/Count-the-number-of-people-currently-in-the-room.git
    ```
 2. once this done redirect the directory into the project
 3. ``bash

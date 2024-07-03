@@ -20,160 +20,170 @@
 
 ## Introduction
 
-This project involves annotating a dataset containing images with boxes, training a YOLOv8 model for object detection, and using the trained model to detect boxes in images. The steps below detail the entire process from dataset preparation to model training and testing.
+This Python script demonstrates how to use a pre-trained MobileNet SSD model for object detection, specifically to count the number of persons in a video feed.
 
 ## Requirements
 
 - **Python 3.x**
 - **OpenCV 4.x**
-- **Ultralytics**
-- **Pytorch**
-- **LabelImg**
+- **NumPy (numpy)**
 
 ## Software and Tools
 
 - **Python:** Programming language used for the script.
 - **OpenCV:** Library for computer vision tasks.
-- **Ultralytics:** Ultralytics specializes in high-performance AI models, notably the YOLO object detection framework.
-- **Pytorch:** PyTorch is an open-source deep learning framework for building and training neural networks.
-- **LabelImg:** LabelImg is an open-source graphical image annotation tool used for labeling objects in images.
-
+- **NumPy ** Library for numerical computing
 ## Dataset Preparation
-[Labeling image](https://drive.google.com/drive/folders/1WHpExY04EewfeeqJdMxsMg6maO7FCz8_?usp=drive_link)
-1. **Annotate Images**: Use `labelimg` to annotate the dataset containing images with boxes. Save the annotations in the appropriate format.
 
-
-2. **Split Dataset**: Split the annotated dataset into training and validation sets, each containing `images` and `labels` folders.
-
+No specific dataset preparation is needed as the script uses a pre-trained MobileNet SSD model.
 
 ## Configuration File
 
-Create a `data_custom.yaml` file with the following configuration:
-```yaml
-train: D:\box\train
-val: D:\box\val
-nc: 1
-names: ["box"]
-```
+The configuration files used are:
+
+- deploy.prototxt: Defines the architecture of the neural network.
+- mobilenet_iter_73000.caffemodel: Contains the weights of the trained MobileNet SSD model.
 
 ## Model Setup
-1. Download YOLOv8 Weights: Download the yolov8.pt file from the Ultralytics GitHub repository.
+1.The MobileNet SSD model is loaded using 'cv2.dnn.readNetFromCaffe'.
 
-2. Install PyTorch: Open a command prompt in the root directory of your project and install PyTorch using the following command: 
+2. Install OpenCV: Open a command prompt in the root directory of your project and install OpenCV using the following command: 
 ```bash
-pip3 install --upgrade torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install opencv-python
+pip install opencv-contrib-python
 ```
 
-3. Install Ultralytics: Install the Ultralytics package using the command:
+3. Activate Virtual Environment: Activate your virtual environment using the following command.
 ```bash
-pip install ultralytics
-```
-4. Activate Virtual Environment: Activate your virtual environment.
+Open a command prompt in the root directory of your project and activate virtual environment using the following command:
+-python -m venv myenv
+-cd myenv
+-cd Scripts
+-Activate
+ ```
 
-5. Verify Installation: Check if PyTorch is installed and CUDA is available using the following commands:
+4. Once the virtal environment is activated go back to your root directory using the following command:
 ```bash
-python -c "import torch; print(torch.__version__)"
-python -c "import torch; print(torch.cuda.is_available())"
+-Use command cd .. till you reach the root directory
 ```
 
 ## Training the Model
-Train the YOLOv8 model using the following command:
-
-```bash
-yolo task=detect mode=train epochs=30 data=data_custom.yaml model=yolov8m.pt imgsz=640 batch=3
-```
-This process might take some time. Upon completion, you will get a best.pt file located inside runs>detect>train>weights.
-
+The model has already been pre-trained on the COCO dataset for people detection tasks.
 
 ### Rename Trained Weights
-Rename the best.pt file to yolov8m_custom.pt and move it to the root directory.
+Not applicable in this context since the weights are pre-trained.
 
 ### Model Inference
-To detect boxes in an image using the trained model, use the following command:
+The script performs inference on each frame of the video feed to detect persons using the MobileNet SSD model.
 
-```bash
-yolo task=detect mode=predict model=yolov8m_custom.pt show=True conf=0.5 source=1.jpg
-```
 ## Explanation Code 
-### Python Code for Box Detection
-Use the following Python code to import the model yolov8m_custom.pt and detect boxes in an image, displaying the number of boxes detected:
+### Python Code for counting people currently in the room.
+The code iterates through detections made by the model, filters out detections with low confidence, and counts persons while drawing bounding boxes around them:
 
 ```python
 import cv2
 import numpy as np
 
-# Load the image
-image = cv2.imread('box3.jpg')
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+# Load the pre-trained MobileNet SSD model and the prototxt file
+net = cv2.dnn.readNetFromCaffe(
+    'deploy.prototxt', 
+    'mobilenet_iter_73000.caffemodel'
+)
 
-# Apply Gaussian Blur to reduce noise
-blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+# List of class labels MobileNet SSD was trained to detect
+CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
+           "bottle", "bus", "car", "cat", "chair", "cow", "diningtable",
+           "dog", "horse", "motorbike", "person", "pottedplant", "sheep",
+           "sofa", "train", "tvmonitor"]
 
-# Apply thresholding or edge detection to highlight the boxes
-edges = cv2.Canny(blurred, 50, 150)
+# Open a video file or an image file or a webcam feed
+cap = cv2.VideoCapture(0)  # Use 0 for webcam or replace with 'path/to/video' for a video file
 
-# Find contours in the edged image and retrieve the hierarchy
-contours, hierarchy = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-
-# Initialize a list to store valid contours (boxes)
-valid_contours = []
-
-# Define minimum and maximum threshold values for box size
-min_area = 1000  # Adjust this value based on the minimum area of your boxes
-max_area = 5000  # Adjust this value based on the maximum area of your boxes
-
-# Iterate through all detected contours
-for i, contour in enumerate(contours):
-    # Get the bounding box coordinates
-    x, y, w, h = cv2.boundingRect(contour)
+while True:
+    # Capture frame-by-frame
+    ret, frame = cap.read()
     
-    # Calculate the area of the contour
-    area = cv2.contourArea(contour)
-    
-    # Calculate the aspect ratio
-    aspect_ratio = float(w) / h
-    
-    # Filter contours based on area, aspect ratio, and hierarchy
-    if area > min_area and area < max_area and aspect_ratio > 0.5 and aspect_ratio < 2.0:
-        # Check if contour has no parent (top-level contour)
-        if hierarchy[0][i][3] == -1:
-            valid_contours.append(contour)
-            cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+    if not ret:
+        break
 
-# Count the number of detected valid contours (boxes)
-num_boxes = len(valid_contours)
+    # Get the height and width of the frame
+    (h, w) = frame.shape[:2]
 
-# Display the result
-cv2.putText(image, f'Number of Boxes: {num_boxes}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
-cv2.imshow('Boxes Detected', image)
-cv2.waitKey(0)
+    # Preprocess the frame: resize to 300x300 pixels and normalize it
+    blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)), 0.007843, (300, 300), 127.5)
+
+    # Pass the blob through the network and obtain the detections and predictions
+    net.setInput(blob)
+    detections = net.forward()
+
+    # Initialize a counter for people
+    person_count = 0
+
+    # Loop over the detections
+    for i in range(detections.shape[2]):
+        # Extract the confidence (i.e., probability) associated with the prediction
+        confidence = detections[0, 0, i, 2]
+
+        # Filter out weak detections by ensuring the confidence is greater than a minimum threshold
+        if confidence > 0.2:
+            # Extract the index of the class label from the detections
+            idx = int(detections[0, 0, i, 1])
+
+            # If the class label is "person", increment the person count
+            if CLASSES[idx] == "person":
+                person_count += 1
+
+                # Compute the (x, y)-coordinates of the bounding box for the object
+                box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
+                (startX, startY, endX, endY) = box.astype("int")
+
+                # Draw the bounding box around the detected object
+                cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
+                label = f"{CLASSES[idx]}: {confidence:.2f}"
+                cv2.putText(frame, label, (startX, startY - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+
+    # Display the output frame
+    cv2.putText(frame, f"Person Count: {person_count}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+    cv2.imshow("Frame", frame)
+
+    # Break the loop if the 'q' key is pressed
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# Release the video capture object and close the display window
+cap.release()
 cv2.destroyAllWindows()
 
-# Print the number of boxes detected
-print(f'Number of boxes detected: {num_boxes}')
 ```
 
 ## Output Explanation
-After running the inference code, the output will be an image with detected boxes highlighted by green rectangles. The number of detected boxes will be displayed both on the image and printed in the console. The contours detected by the algorithm are filtered based on their area, aspect ratio, and hierarchy to ensure only valid boxes are counted.
+The script displays the video feed with bounding boxes around detected persons and counts the number of persons in the frame.
 
 ## Applications
-The techniques and processes described in this project have several practical applications, including:
+This script can be used for real-time person detection in the following:
 
-- **Automated Quality Control**: Detecting defects or missing components in manufacturing.
-- **Logistics and Inventory Management**: Identifying and counting items in warehouses.
-- **Surveillance and Security**: Monitoring and detecting objects in security footage.
-- **Retail**: Managing stock and detecting product placement on shelves.
+- **Public Safety and Security**:Enhance security measures by monitoring and counting individuals in real-time.
+- **Education and Workplace Attendance**:  Automate attendance tracking by accurately counting people entering or leaving 
+  designated areas. 
+- **Retail Analytics and Customer Insights**:  Analyze customer traffic patterns and behavior to optimize store layouts, 
+  improve customer service, and enhance marketing strategies based on foot traffic and visitor demographics.
+- **Home Security and Personal Safety**:  Enhance home security systems by detecting and alerting residents to unauthorized 
+  access or approaching individuals, ensuring personal safety and property protection.
 
 ## Future Scope
 Future enhancements and extensions to this project could include:
 
-- **Multi-Class Detection**: Expanding the model to detect and classify multiple types of objects.
-- **Real-Time Detection**: Implementing real-time detection using video feeds.
+- **Multi-Object Tracking**: Implement algorithms for tracking multiple persons across frames to analyze movement patterns 
+  and behavior over time, enhancing applications like crowd management and surveillance.
+- **Real-time Analytics and Insights**: Develop capabilities to generate real-time analytics and insights from detected 
+  persons, such as crowd density estimation, heat maps, and predictive analytics for proactive decision-making.
+- **Integration with IoT Devices**:Connect the system with IoT devices and sensors to enhance data collection and 
+  integration for smart city applications, automated alerts, and seamless data sharing across platforms.
 - **Improved Accuracy**: Fine-tuning the model and using more sophisticated data augmentation techniques to improve detection accuracy.
 - **Deployment**: Creating a web or mobile application to deploy the model for practical use.
 
 
 ## Summary
 
-This project demonstrates the complete pipeline of annotating a dataset, training a YOLOv8 model, and using the trained model to detect objects in images. By following the steps outlined, one can develop a custom object detection model tailored to specific needs, with various practical applications across different industries. The future scope suggests further improvements and extensions to enhance the model's capabilities and deployment options.
+This project utilizes a pre-trained MobileNet SSD model to detect and count persons in real-time from video feeds. It leverages OpenCV for image processing and inference, displaying bounding boxes around detected persons and providing a count. Applications include enhancing security in public spaces, automating attendance systems, and providing analytics for retail and urban planning. Future enhancements could involve integrating advanced object detection models, real-time analytics, and IoT connectivity for broader applications in smart cities and personalized customer experiences.
 

@@ -1,4 +1,4 @@
-# Counting number of people in a room using OpenCV
+# Counting number of people currently in the room using OpenCV
 
 ## Table of Contents
 1. [Introduction](#introduction)

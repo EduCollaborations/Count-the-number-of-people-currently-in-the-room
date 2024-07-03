@@ -65,6 +65,7 @@ Open a command prompt in the root directory of your project and activate virtual
 4. Once the virtal environment is activated go back to your root directory using the following command:
 ```bash
 -Use command cd .. till you reach the root directory
+-Then run the app.py file using command : python app.py
 ```
 
 ## Training the Model

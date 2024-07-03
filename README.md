@@ -47,7 +47,7 @@ The configuration files used are:
 ## Model Setup
 1.The MobileNet SSD model is loaded using 'cv2.dnn.readNetFromCaffe'.
 
-2.Install OpenCV: Open a command prompt in the root directory of your project and install OpenCV using the following command: 
+2.Install OpenCV: Open a command prompt in the root directory of your project and install OpenCV using the following command(Install them in the root directory after creating the Virtual environment): 
 ```bash
 pip install opencv-python
 pip install opencv-contrib-python

@@ -1,9 +1,4 @@
-
-# Note
-## The given projet is just a example you need to collect dataset related to people in the room and start annotation with the same procedure
-
-
-# Box Detection and Counting using OpenCV
+# Counting number of people in a room using OpenCV
 
 ## Table of Contents
 1. [Introduction](#introduction)

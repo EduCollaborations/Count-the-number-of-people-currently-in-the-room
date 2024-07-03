@@ -26,7 +26,7 @@ This Python script demonstrates how to use a pre-trained MobileNet SSD model for
 
 - **Python 3.x**
 - **OpenCV 4.x**
-- **NumPy (numpy)**
+- **NumPy 3.x**
 
 ## Software and Tools
 

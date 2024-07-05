@@ -1,9 +1,8 @@
 
-# Note
-## The given projet is just a example you need to collect dataset related to people in the room and start annotation with the same procedure
 
 
-# Box Detection and Counting using OpenCV
+
+# Counting the number of people using OpenCV
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -25,57 +24,45 @@
 
 ## Introduction
 
-This project involves annotating a dataset containing images with boxes, training a YOLOv8 model for object detection, and using the trained model to detect boxes in images. The steps below detail the entire process from dataset preparation to model training and testing.
+This project involves annotating a dataset containing images with people, training a  model for counting the number of people in a room, and using the trained model to detect number os people present in the room . The steps below detail the entire process from dataset preparation to model training and testing.
 
 ## Requirements
 
 - **Python 3.x**
 - **OpenCV 4.x**
-- **Ultralytics**
-- **Pytorch**
-- **LabelImg**
 
 ## Software and Tools
 
 - **Python:** Programming language used for the script.
 - **OpenCV:** Library for computer vision tasks.
-- **Ultralytics:** Ultralytics specializes in high-performance AI models, notably the YOLO object detection framework.
-- **Pytorch:** PyTorch is an open-source deep learning framework for building and training neural networks.
-- **LabelImg:** LabelImg is an open-source graphical image annotation tool used for labeling objects in images.
-
+- 
 ## Dataset Preparation
 [Labeling image](https://drive.google.com/drive/folders/1WHpExY04EewfeeqJdMxsMg6maO7FCz8_?usp=drive_link)
 1. **Annotate Images**: Use `labelimg` to annotate the dataset containing images with boxes. Save the annotations in the appropriate format.
 
 
 2. **Split Dataset**: Split the annotated dataset into training and validation sets, each containing `images` and `labels` folders.
-
-
-## Configuration File
-
-Create a `data_custom.yaml` file with the following configuration:
-```yaml
-train: D:\box\train
-val: D:\box\val
-nc: 1
-names: ["box"]
+   
 ```
 
-## Model Setup
-1. Download YOLOv8 Weights: Download the yolov8.pt file from the Ultralytics GitHub repository.
 
-2. Install PyTorch: Open a command prompt in the root directory of your project and install PyTorch using the following command: 
+
+3. Install OpenCV: Install the OpenCV package using the command:
 ```bash
-pip3 install --upgrade torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install opencv-python
+pip install opencv-contrib-python
 ```
+4. Activate Virtual Environment: Activate your virtual environment using following commands.
+1. Go to command prompt
+2. Open the current directory that the project is stored
+3. Run the following commands one by one :
+   python -m venv myenv
+   cd myenv
+   cd Scripts
+   Activate
+  
 
-3. Install Ultralytics: Install the Ultralytics package using the command:
-```bash
-pip install ultralytics
-```
-4. Activate Virtual Environment: Activate your virtual environment.
-
-5. Verify Installation: Check if PyTorch is installed and CUDA is available using the following commands:
+6. Verify Installation: Check if PyTorch is installed and CUDA is available using the following commands:
 ```bash
 python -c "import torch; print(torch.__version__)"
 python -c "import torch; print(torch.cuda.is_available())"

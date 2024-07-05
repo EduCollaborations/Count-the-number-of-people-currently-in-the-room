@@ -5,8 +5,11 @@ Step 1:
 Open a command prompt in the root directory of your project and activate virtual environment using the following command:
 
 -python -m venv myenv
+
 -cd myenv
+
 -cd Scripts
+
 -Activate
 
 Step 2:
@@ -20,6 +23,7 @@ Step 3:
 Install OpenCV using the following command :
 
 -pip install opencv-python
+
 -pip install opencv-contrib-python
 
 Step 4:

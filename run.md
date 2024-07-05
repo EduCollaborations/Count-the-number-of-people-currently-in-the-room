@@ -24,7 +24,7 @@ Install OpenCV using the following command :
 
 Step 4:
 
--Then run the app.py file using command : python app.py
+-Then run the app.py file using command : python main_file.py
 
 Step 5:
 

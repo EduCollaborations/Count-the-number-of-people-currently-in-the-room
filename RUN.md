@@ -8,7 +8,8 @@
     source activate
 ## requirements 
     pip install opencv-python
-    pip install numpy
+    pip install numpy==1.24.4
+    pip install pandas
     pip install matplotlib
     pip install pillow
 ## install pytorch

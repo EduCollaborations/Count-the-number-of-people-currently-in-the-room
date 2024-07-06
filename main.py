@@ -13,7 +13,7 @@ except Exception as e:
     exit()
 
 # Step 2: Set the Path to Your Image
-image_path = 'D:\BE-CSE\project\Count-the-number-of-people-currently-in-the-room\images\img3.jpg'
+image_path = 'D:\BE-CSE\project\Count-the-number-of-people-currently-in-the-room\images\img3.jpg'  #change the img for processing different img
 if not os.path.exists(image_path):
     print(f"Error: The file at path {image_path} does not exist.")
     exit()

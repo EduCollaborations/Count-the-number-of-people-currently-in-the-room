@@ -13,7 +13,7 @@
     pip install matplotlib
     pip install pillow
 ## install pytorch
-    pip3 install torch torchvision torchaudio
+    pip3 install torch torchvision torchaudio   (only for windows 11)
 ## install YOLO
 clone the yolov5
 

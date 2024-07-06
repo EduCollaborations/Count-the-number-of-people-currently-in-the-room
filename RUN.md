@@ -16,3 +16,4 @@ clone the yolov5
 
     git clone https://github.com/ultralytics/yolov5
     
+## run the main file

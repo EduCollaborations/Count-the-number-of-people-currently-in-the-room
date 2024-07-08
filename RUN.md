@@ -14,14 +14,13 @@
 ## requirements
 
     pip install opencv-python
-    pip install numpy
+    pip install numpy==1.24.4
+    pip install pandas
     pip install matplotlib
     pip install pillow
 
 ## install pytorch
-
-    pip3 install torch torchvision torchaudio
-
+    pip3 install torch torchvision torchaudio   (only for windows 11)
 ## install YOLO
 
 clone the yolov5

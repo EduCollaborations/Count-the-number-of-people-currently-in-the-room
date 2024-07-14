@@ -14,21 +14,24 @@
 ## requirements
 
     pip install opencv-python
-    pip install numpy==1.24.4
-    pip install pandas
-    pip install matplotlib
-    pip install pillow
+    pip install opencv-contrib-python
+    pip install ultralytics
+    pip install torch torchvision torchaudio
 
-## install pytorch
-    pip3 install torch torchvision torchaudio   (only for windows 11)
-## install YOLO
+### run the 1st.py
+This process might take some time. Upon completion, you will get a best.pt file located inside runs>detect>train>weights.
 
-clone the yolov5
+### Rename Trained Weights
+Rename the best.pt file to yolov8m_custom.pt and move it to the root directory.
 
-    git clone https://github.com/ultralytics/yolov5
+### Model Inference
+To detect boxes in an image using the trained model, use the following command:
 
-## run the main file
+```bash
+yolo task=detect mode=predict model=yolov8m_custom.pt show=True conf=0.5 source=1.jpg
+```
+change the source= (give the path of the valid directory)
+the predicted files will be saved inside runs>detect>train>
 
-1.change the image path as per your directory
-
-NOTE: If windows build tools are required , [download it here](https://visualstudio.microsoft.com/downloads/?q=build+tools)
+### Python Code for Counting the number of people
+    run the 2nd.py

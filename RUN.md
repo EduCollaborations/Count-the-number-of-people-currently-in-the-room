@@ -25,10 +25,10 @@ This process might take some time. Upon completion, you will get a best.pt file 
 Rename the best.pt file to yolov8m_custom.pt and move it to the root directory.
 
 ### Model Inference
-To detect boxes in an image using the trained model, use the following command:
+To detect persons in an image using the trained model, use the following command:
 
 ```bash
-yolo task=detect mode=predict model=yolov8m_custom.pt show=True conf=0.5 source=1.jpg
+yolo task=detect mode=predict model=yolov8m_custom.pt show=True conf=0.5 source=people.jpg
 ```
 change the source= (give the path of the valid directory)
 the predicted files will be saved inside runs>detect>train>

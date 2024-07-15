@@ -1,0 +1,4 @@
+train: D:\shivu\people\train\images
+val: D:\shivu\people\valid\images
+nc: 1
+names: ["people"]
